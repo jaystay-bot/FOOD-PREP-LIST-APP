@@ -123,6 +123,22 @@ h3 {
 }
 
 .center { text-align: center; }
+.center-row { justify-content: center; }
+
+.plan-card {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.plan-text {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
 .footer {
   padding: 24px 0 40px;
 }
