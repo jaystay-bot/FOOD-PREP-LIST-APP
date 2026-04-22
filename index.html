@@ -4,23 +4,180 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NoBrain Meals | Cheap Weekly Food Plan</title>
-  <meta name="description" content="Cheap weekly food planning with exact grocery lists, simple store-bought meals, and audio mission transcripts." />
+  <meta name="description" content="A cheap, repeatable weekly food plan. Exact grocery list, 7-day meals, and backup fixes for when you forget groceries. No signup. Use it on-page right now." />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Meal plan day cards */
+    .meal-plan-card { padding: 0; }
+    .meal-plan-card .day {
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .meal-plan-card .day:last-child { border-bottom: 0; }
+    .day-title {
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .day-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(126,224,129,0.12);
+      color: var(--accent);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .day-split {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 20px;
+    }
+    .day-split h4 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted-2);
+      margin: 0 0 8px;
+    }
+    .recipe-list, .recipe-steps {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .recipe-list li, .recipe-steps li {
+      color: var(--text);
+      padding: 3px 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Grocery list */
+    .grocery-card { padding: 28px; }
+    .grocery-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted-2);
+      margin: 0 0 14px;
+    }
+    .grocery-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 24px;
+    }
+    .grocery-list li {
+      color: var(--text);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.97rem;
+    }
+    .grocery-total {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin: 4px 0 0;
+    }
+    .grocery-divider {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 24px 0 20px;
+    }
+    .your-items-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted-2);
+      margin: 0 0 4px;
+    }
+    .your-items-hint {
+      color: var(--muted-2);
+      font-size: 0.88rem;
+      margin: 0 0 14px;
+    }
+    .add-item-form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .user-item-input {
+      flex: 1;
+      min-width: 0;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line-strong);
+      background: rgba(0,0,0,0.25);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.96rem;
+      outline: none;
+      transition: border-color 0.18s ease;
+    }
+    .user-item-input::placeholder { color: var(--muted-2); }
+    .user-item-input:focus { border-color: var(--accent); }
+    .user-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .user-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--text);
+      font-size: 0.97rem;
+    }
+    .user-list li:last-child { border-bottom: 0; }
+    .user-item-remove {
+      background: transparent;
+      border: 1px solid var(--line-strong);
+      color: var(--muted-2);
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease, border-color 0.15s ease;
+      flex-shrink: 0;
+    }
+    .user-item-remove:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 700px) {
+      .day-split { grid-template-columns: 1fr; gap: 14px; }
+      .grocery-list { grid-template-columns: 1fr; }
+      .meal-plan-card .day { padding: 20px; }
+      .grocery-card { padding: 22px; }
+    }
+  </style>
 </head>
 <body>
   <header class="hero">
     <div class="container">
       <p class="eyebrow">Cheap food. Less thinking. More control.</p>
       <h1>NoBrain Meals</h1>
-      <p class="subhead">A simple weekly food system that tells people exactly what to buy, what to eat, and what to do when they forget groceries.</p>
+      <p class="subhead">A cheap weekly food system. Know exactly what to buy, what to eat, and what to do when you forget groceries &mdash; without signup, apps, or recipe overload.</p>
       <div class="cta-row">
-        <a class="button primary" href="#plan">Get the plan</a>
+        <a class="button primary" href="#plan">Open the plan</a>
         <a class="button secondary" href="#mission">Hear the mission</a>
       </div>
-      <ul class="hero-points">
-        <li>Built for broke weeks, busy workers, and forgetful shoppers</li>
-        <li>No app, no login, no subscription trap</li>
-        <li>Fast to use and honest about what it is</li>
+      <ul class="trust-strip">
+        <li>$50&ndash;$70 weekly target</li>
+        <li>No signup, no app</li>
+        <li>Use it in 30 seconds</li>
       </ul>
     </div>
   </header>
@@ -29,24 +186,306 @@
     <section class="section dark">
       <div class="container grid-2">
         <div>
-          <h2>Why this exists</h2>
-          <p>Most people do not need gourmet recipes. They need a decision removed. NoBrain Meals turns store food into a usable plan instead of another pile of grocery guilt.</p>
+          <p class="eyebrow small">Why this exists</p>
+          <h2>You don&rsquo;t need a new recipe. You need the decision removed.</h2>
+          <p>Most people aren&rsquo;t tired of food. They&rsquo;re tired of choosing. NoBrain Meals turns normal store-bought food into a weekly plan that actually gets used &mdash; so you stop losing money on waste and brain power on &ldquo;what&rsquo;s for dinner.&rdquo;</p>
         </div>
-        <div class="card">
-          <h3>What customers get</h3>
-          <ul>
-            <li>One grocery list</li>
+        <div class="card benefit-card">
+          <h3>What you get</h3>
+          <ul class="benefit-list">
+            <li>One cheap grocery list</li>
             <li>One 7-day food plan</li>
-            <li>Emergency backup meal options</li>
+            <li>Backup meals for the weeks you forget groceries</li>
             <li>Simple rules that prevent waste</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="mission" class="section">
+    <section class="section">
+      <div class="container grid-3">
+        <div class="card pillar-card">
+          <h3>Cheap</h3>
+          <p>Normal store food. Not weird ingredients or meal-prep theater.</p>
+        </div>
+        <div class="card pillar-card">
+          <h3>Fast</h3>
+          <p>Shop, eat, and recover from mistakes without replanning every day.</p>
+        </div>
+        <div class="card pillar-card">
+          <h3>Honest</h3>
+          <p>It saves money, time, and mental load. That&rsquo;s it. That&rsquo;s enough.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="plan" class="section dark">
+      <div class="container center">
+        <p class="eyebrow small">Use it right now</p>
+        <h2>Open the plan</h2>
+        <p class="lede">Everything below is the actual plan. Read it, screenshot it, save it. No email, no signup.</p>
+        <div class="cta-row center-row">
+          <a class="button primary" href="#grocery-list">Grocery list</a>
+          <a class="button primary" href="#meal-plan">7-day meal plan</a>
+          <a class="button primary" href="#backup-fixes">Backup fixes</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="grocery-list" class="section module">
       <div class="container">
-        <h2>Mission audio + transcript</h2>
+        <p class="eyebrow small">Module 1</p>
+        <h2>Grocery list</h2>
+        <p class="lede">One cart. One trip. About $50&ndash;$70 at Walmart or Aldi.</p>
+        <article class="card plan-card grocery-card">
+          <p class="grocery-title">Buy once, cook all week</p>
+          <ul class="grocery-list">
+            <li>Chicken thighs (about 4)</li>
+            <li>Ground beef (1 lb)</li>
+            <li>Eggs (1 dozen)</li>
+            <li>White rice (small bag)</li>
+            <li>Pasta (1 box, 8 oz)</li>
+            <li>Bread (1 loaf)</li>
+            <li>Tortillas (1 pack)</li>
+            <li>Potatoes (2)</li>
+            <li>Shredded cheese (1 bag)</li>
+            <li>Peanut butter (1 jar)</li>
+            <li>Pasta sauce (1 jar)</li>
+            <li>Bananas (3&ndash;4)</li>
+            <li>Frozen vegetables (1 bag)</li>
+            <li>Garlic (1 bulb)</li>
+            <li>Olive oil</li>
+            <li>Salt &amp; pepper</li>
+          </ul>
+          <p class="grocery-total">Total target: about $50 to $70 at Walmart or Aldi.</p>
+
+          <hr class="grocery-divider" />
+
+          <p class="your-items-title">Your items</p>
+          <p class="your-items-hint">Add anything else you need. Saved in your browser.</p>
+          <form id="user-item-form" class="add-item-form" onsubmit="return false;">
+            <label for="user-item-input" class="visually-hidden-label" style="position:absolute;left:-9999px;">Add grocery item</label>
+            <input type="text" id="user-item-input" class="user-item-input" placeholder="e.g., apples, oatmeal, hot sauce" autocomplete="off" maxlength="80" />
+            <button type="button" class="button primary" id="user-item-add">Add</button>
+          </form>
+          <ul id="user-grocery-list" class="user-list" aria-live="polite"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="meal-plan" class="section module">
+      <div class="container">
+        <p class="eyebrow small">Module 2</p>
+        <h2>7-day meal plan</h2>
+        <p class="lede">Simple, repeatable, forgiving. Leftovers are built in.</p>
+        <article class="card plan-card meal-plan-card">
+          <section class="day">
+            <h3 class="day-title"><span class="day-tag">Day 1</span> Garlic Chicken &amp; Rice</h3>
+            <div class="day-split">
+              <div>
+                <h4>Ingredients</h4>
+                <ul class="recipe-list">
+                  <li>2 chicken thighs</li>
+                  <li>1 cup white rice (dry)</li>
+                  <li>2 cloves garlic, minced</li>
+                  <li>Olive oil</li>
+                  <li>Salt &amp; pepper</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Steps</h4>
+                <ol class="recipe-steps">
+                  <li>Season chicken with salt, pepper, and minced garlic.</li>
+                  <li>Heat oil in a pan over medium heat.</li>
+                  <li>Cook chicken 6&ndash;8 min per side until browned and cooked through.</li>
+                  <li>Cook rice separately per package directions.</li>
+                  <li>Serve chicken over rice.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="day">
+            <h3 class="day-title"><span class="day-tag">Day 2</span> Ground Beef Pasta</h3>
+            <div class="day-split">
+              <div>
+                <h4>Ingredients</h4>
+                <ul class="recipe-list">
+                  <li>1/2 lb ground beef</li>
+                  <li>8 oz pasta</li>
+                  <li>1 cup pasta sauce</li>
+                  <li>Olive oil</li>
+                  <li>Salt &amp; pepper</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Steps</h4>
+                <ol class="recipe-steps">
+                  <li>Boil pasta in salted water until al dente; drain.</li>
+                  <li>Brown ground beef in a pan with salt and pepper.</li>
+                  <li>Drain fat, add pasta sauce, simmer 5 min.</li>
+                  <li>Toss pasta with the beef sauce.</li>
+                  <li>Serve hot.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="day">
+            <h3 class="day-title"><span class="day-tag">Day 3</span> Scrambled Egg Tortilla Wrap</h3>
+            <div class="day-split">
+              <div>
+                <h4>Ingredients</h4>
+                <ul class="recipe-list">
+                  <li>3 eggs</li>
+                  <li>2 tortillas</li>
+                  <li>1/2 cup shredded cheese</li>
+                  <li>Olive oil</li>
+                  <li>Salt &amp; pepper</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Steps</h4>
+                <ol class="recipe-steps">
+                  <li>Beat eggs with a pinch of salt and pepper.</li>
+                  <li>Heat oil in a pan, scramble eggs over low-medium heat until just set.</li>
+                  <li>Warm tortillas in a dry pan, ~30 sec per side.</li>
+                  <li>Fill tortillas with eggs and cheese.</li>
+                  <li>Fold and serve.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="day">
+            <h3 class="day-title"><span class="day-tag">Day 4</span> Chicken Tacos</h3>
+            <div class="day-split">
+              <div>
+                <h4>Ingredients</h4>
+                <ul class="recipe-list">
+                  <li>1 chicken thigh, diced</li>
+                  <li>3 tortillas</li>
+                  <li>Shredded cheese</li>
+                  <li>Olive oil</li>
+                  <li>Salt &amp; pepper</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Steps</h4>
+                <ol class="recipe-steps">
+                  <li>Dice chicken into small pieces.</li>
+                  <li>Heat oil in a pan, add chicken, season with salt and pepper.</li>
+                  <li>Cook 4&ndash;5 min until cooked through.</li>
+                  <li>Warm tortillas in a dry pan.</li>
+                  <li>Fill with chicken and cheese. Serve.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="day">
+            <h3 class="day-title"><span class="day-tag">Day 5</span> Peanut Butter &amp; Banana Sandwich</h3>
+            <div class="day-split">
+              <div>
+                <h4>Ingredients</h4>
+                <ul class="recipe-list">
+                  <li>2 slices bread</li>
+                  <li>Peanut butter</li>
+                  <li>1 banana</li>
+                  <li>(Optional) pinch of salt</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Steps</h4>
+                <ol class="recipe-steps">
+                  <li>Spread peanut butter generously on one slice of bread.</li>
+                  <li>Slice banana thinly.</li>
+                  <li>Lay banana slices on the peanut butter.</li>
+                  <li>Close the sandwich.</li>
+                  <li>Optional: toast in a dry pan 2 min per side for a warm version.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="day">
+            <h3 class="day-title"><span class="day-tag">Day 6</span> Beef &amp; Roasted Potatoes</h3>
+            <div class="day-split">
+              <div>
+                <h4>Ingredients</h4>
+                <ul class="recipe-list">
+                  <li>1/2 lb ground beef</li>
+                  <li>2 potatoes, diced</li>
+                  <li>Olive oil</li>
+                  <li>Salt &amp; pepper</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Steps</h4>
+                <ol class="recipe-steps">
+                  <li>Toss diced potatoes with oil, salt, and pepper.</li>
+                  <li>Roast at 425&deg;F for 25 min (or pan-fry 15 min, stirring).</li>
+                  <li>Brown ground beef in a pan with salt and pepper.</li>
+                  <li>Drain fat.</li>
+                  <li>Plate beef next to potatoes and serve.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section class="day">
+            <h3 class="day-title"><span class="day-tag">Day 7</span> Chicken &amp; Frozen Vegetables</h3>
+            <div class="day-split">
+              <div>
+                <h4>Ingredients</h4>
+                <ul class="recipe-list">
+                  <li>1 chicken thigh</li>
+                  <li>2 cups frozen vegetables</li>
+                  <li>Olive oil</li>
+                  <li>Salt &amp; pepper</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Steps</h4>
+                <ol class="recipe-steps">
+                  <li>Season chicken with salt and pepper.</li>
+                  <li>Heat oil in a pan over medium heat.</li>
+                  <li>Cook chicken 6&ndash;8 min per side until cooked through.</li>
+                  <li>Add frozen vegetables to the same pan; cook 5&ndash;7 min until tender.</li>
+                  <li>Plate and serve.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <section id="backup-fixes" class="section module">
+      <div class="container">
+        <p class="eyebrow small">Module 3</p>
+        <h2>If you forgot groceries</h2>
+        <p class="lede">The rescue plan for bad weeks. Four cheap backups, always in the house.</p>
+        <article class="card plan-card">
+<pre class="plan-text">IF YOU FORGOT GROCERIES
+
+Cheap backup meals:
+- Eggs and toast
+- Peanut butter sandwich
+- Rice and frozen vegetables
+- Tortilla and cheese
+
+Rule:
+Always keep two backup meals at home.</pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="mission" class="section dark">
+      <div class="container">
+        <p class="eyebrow small">Optional</p>
+        <h2>The mission, out loud</h2>
+        <p class="lede">Three short notes on why this exists. Read them, or let your browser read them to you &mdash; whatever&rsquo;s easier.</p>
         <div class="audio-grid">
           <article class="card audio-card">
             <h3>Mission</h3>
@@ -76,126 +515,10 @@
       </div>
     </section>
 
-    <section class="section dark">
-      <div class="container grid-3">
-        <div class="card">
-          <h3>Cheap</h3>
-          <p>Uses normal store-bought food, not weird ingredients and fake meal-prep influencer nonsense.</p>
-        </div>
-        <div class="card">
-          <h3>Fast</h3>
-          <p>People can shop, eat, and recover from mistakes without planning from scratch every day.</p>
-        </div>
-        <div class="card">
-          <h3>Honest</h3>
-          <p>It is not pretending to change someone’s life. It saves money, time, and mental load. That is enough.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="plan" class="section">
-      <div class="container center">
-        <h2>Get the plan now</h2>
-        <p>Everything below is the actual plan. Read it, screenshot it, save it. No email required, no signup.</p>
-        <div class="cta-row center-row">
-          <a class="button secondary" href="#grocery-list">Grocery list</a>
-          <a class="button secondary" href="#meal-plan">7-day meal plan</a>
-          <a class="button secondary" href="#backup-fixes">Forgot-groceries fixes</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="grocery-list" class="section dark">
-      <div class="container">
-        <h2>Grocery list</h2>
-        <article class="card plan-card">
-<pre class="plan-text">Walmart / Aldi Cheap List
-
-Protein:
-- Chicken thighs
-- Ground beef
-- Eggs
-
-Carbs:
-- Rice
-- Pasta
-- Bread
-- Tortillas
-- Potatoes
-
-Extras:
-- Cheese
-- Peanut butter
-- Pasta sauce or BBQ sauce
-
-Produce:
-- Bananas
-- Frozen vegetables
-
-Total target: about $50 to $70</pre>
-        </article>
-      </div>
-    </section>
-
-    <section id="meal-plan" class="section">
-      <div class="container">
-        <h2>7-day meal plan</h2>
-        <article class="card plan-card">
-<pre class="plan-text">NO-BRAIN MEAL PLAN
-
-Day 1
-Lunch: Chicken and rice
-Dinner: Beef pasta
-
-Day 2
-Lunch: Egg sandwich
-Dinner: Chicken tacos
-
-Day 3
-Lunch: Leftover chicken and rice
-Dinner: Pasta and sauce
-
-Day 4
-Lunch: Peanut butter sandwich and banana
-Dinner: Ground beef and potatoes
-
-Day 5
-Lunch: Egg sandwich
-Dinner: Chicken and frozen vegetables
-
-Day 6
-Lunch: Leftovers mix
-Dinner: Tacos again
-
-Day 7
-Lunch: Whatever is left
-Dinner: Finish remaining food</pre>
-        </article>
-      </div>
-    </section>
-
-    <section id="backup-fixes" class="section dark">
-      <div class="container">
-        <h2>If you forgot groceries</h2>
-        <article class="card plan-card">
-<pre class="plan-text">IF YOU FORGOT GROCERIES
-
-Cheap backup meals:
-- Eggs and toast
-- Peanut butter sandwich
-- Rice and frozen vegetables
-- Tortilla and cheese
-
-Rule:
-Always keep two backup meals at home.</pre>
-        </article>
-      </div>
-    </section>
-
     <section class="section">
       <div class="container center">
-        <h2>Use it today</h2>
-        <p>That is the whole first version. Simple, repeatable, cheap. Bookmark this page for the next bad grocery week.</p>
+        <h2>That&rsquo;s the whole thing.</h2>
+        <p class="lede">Cheap food. One list. Seven days. A backup for the bad weeks. Bookmark this page for the next time the week falls apart.</p>
         <a class="button primary" href="#plan">Back to the plan</a>
       </div>
     </section>
@@ -209,5 +532,67 @@ Always keep two backup meals at home.</pre>
 
   <script src="transcripts.js"></script>
   <script src="script.js"></script>
+  <script>
+    (function () {
+      var STORAGE_KEY = 'user-grocery-list';
+      var listEl = document.getElementById('user-grocery-list');
+      var inputEl = document.getElementById('user-item-input');
+      var addBtn = document.getElementById('user-item-add');
+      if (!listEl || !inputEl || !addBtn) return;
+
+      function load() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          var parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (e) { return []; }
+      }
+
+      function save(items) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (e) {}
+      }
+
+      function render() {
+        var items = load();
+        listEl.innerHTML = '';
+        items.forEach(function (item, i) {
+          var li = document.createElement('li');
+          var span = document.createElement('span');
+          span.textContent = item;
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'user-item-remove';
+          btn.setAttribute('aria-label', 'Remove ' + item);
+          btn.textContent = '×';
+          btn.addEventListener('click', function () {
+            var next = load().filter(function (_, j) { return j !== i; });
+            save(next);
+            render();
+          });
+          li.appendChild(span);
+          li.appendChild(btn);
+          listEl.appendChild(li);
+        });
+      }
+
+      function addItem() {
+        var v = (inputEl.value || '').trim();
+        if (!v) return;
+        var items = load();
+        items.push(v);
+        save(items);
+        render();
+        inputEl.value = '';
+        inputEl.focus();
+      }
+
+      addBtn.addEventListener('click', addItem);
+      inputEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); addItem(); }
+      });
+
+      render();
+    })();
+  </script>
 </body>
 </html>
